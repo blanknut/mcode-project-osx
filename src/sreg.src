@@ -1,0 +1,44 @@
+;**********************************************************************
+; sREG function from ZENROM manual p102ff
+
+            .TITLE  "Example routine sREG"
+            .ZENCODE
+
+            .NAME "sREG"
+[sREG]      C=REG   13
+            RCR     11
+            A=C     X
+            CF      0
+            RAMSLCT
+            RDATA
+            A=C     M
+            C=-C-1  M
+            WDATA
+            RDATA
+            C=-C-1  M
+            WDATA
+            ?A#C    M
+            *
+            CGO     02E0
+            ?FS     0
+            JC      +8
+            LDI     04
+            A<>C    X
+            M=C
+            SF      0
+            JNC     -19
+            A<>C    X
+            N=C
+            RAMSLCT
+            RDATA
+            A=C     ALL
+            C=M
+            RAMSLCT
+            C=C-1   X
+            M=C
+            A<>C    ALL
+            WDATA
+            C=N
+            C=C-1   X
+            JNC     -12
+            RTN

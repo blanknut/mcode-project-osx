@@ -1,0 +1,16 @@
+;**********************************************************************
+; Loader file for MCODE example
+
+; Load the HP-41 OS
+$PAGE 0 1 XNUT0
+$PAGE 1 1 XNUT1
+$PAGE 2 1 XNUT2
+$PAGE 3 1 CXFUNS0
+$PAGE 5 1 TIMER
+$PAGE 5 2 CXFUNS1
+
+; Load the example ROM as well
+$PAGE 8 1 example
+
+; Include all labels so that we can move around easily
+$LABELS example

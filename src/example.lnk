@@ -1,0 +1,13 @@
+;**********************************************************************
+; Link file for MCODE example
+
+; Define page, bank and ROM name
+$PAGE 8 1 example
+
+; Tell the linker the name of the .obj files
+fat
+exchyz
+sreg
+
+; Calculate and store the checksum in the ROM image as well
+$CH

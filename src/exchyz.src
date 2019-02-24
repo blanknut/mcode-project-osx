@@ -1,0 +1,16 @@
+;**********************************************************************
+; Example MCODE function from the SKWID ROM
+
+            .TITLE  "Example routine Y<>Z"
+            .JDA
+
+;*** Y<>Z Function ****************************************************
+
+            .NAME   "Y<>Z"
+[Y<>Z]      READ    2(Y)        ; Put Y register into C
+            A=C     ALL         ; Save Y to A
+            READ    1(Z)        ; Put Z register into C
+            WRIT    2(Y)        ; Write Z register out to Y register
+            A<>C    ALL         ; Bring back Y register to C
+            WRIT    1(Z)        ; Write Y register out to Z register
+            RTN

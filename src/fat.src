@@ -1,0 +1,19 @@
+;**********************************************************************
+
+            .TITLE  "FAT for example ROM"
+            .JDA
+
+;*** FAT for this example ROM *****************************************
+
+            XROM    1           ; XROM number
+            FCNS    3           ; Header + N functions
+            DEFR4K  (Header)
+            DEFR4K  [Y<>Z]
+            DEFR4K  [sREG]
+            NOP                 ; FAT terminator
+            NOP
+
+;**** Header **********************************************************
+
+            .NAME   "-EXAM 1A"
+(Header)    RTN
