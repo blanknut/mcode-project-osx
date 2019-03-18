@@ -2,11 +2,12 @@
 
 # MCODE project configuration where
 # - sourceDir contains
-#   - MCODE source files with extension .a41
+#   - MCODE source files (extension .src)
 #   - linker file ${projectName}.lnk
+#   - (optional) emulator loader file ${projectName}.lod
 # - buildDir is the target for all output files
 # Note that all files in $sourceDir are expected to have CR LF
-# line terminators; you may use command 'file ${sourceDir}/*'
+# line terminators! You may use command 'file ${sourceDir}/*'
 # to check that.
 
 sourceDir=./src
@@ -105,6 +106,17 @@ doTest() {
     return 0
 }
 
+# Deploy project to HP-41CL, see built target 'deploy'
+doDeploy() {
+    local projectName="$1"
+    doBuild "$projectName"
+    echo "deploy $1"
+    echo "\033[0;31mStart the receive program on your HP-41CL now\033[0m"
+    sleep 5
+    java -jar $CLUPDATE --upload build/${projectName}.rom $USBSERIAL 4800
+    return 0
+}
+
 # Environment variable SDK41 defines path to SDK41
 if [ -z "$SDK41" ]; then
     echo "*** error: path to HP-41 SDK not set"
@@ -117,6 +129,17 @@ elif [ "$1" == "" ] || [ "$1" == "build" ]; then
     exit $?
 elif [ "$1" == "test" ]; then
     doTest "$(guessProjectName)"
+    exit $?
+elif [ "$1" == "deploy" ]; then
+    if [ -z "$CLUPDATE" ]; then
+        echo "*** error: path to HP-41CL update program not set"
+        exit 1
+    fi
+    if [ -z "$USBSERIAL" ]; then
+        echo "*** error: USB serial device name not set"
+        exit 1
+    fi
+    doDeploy "$(guessProjectName)"
     exit $?
 else
     echo "*** error: unknown build target"

@@ -18,12 +18,19 @@ First, you  have to install DOSBox and make sure it runs fine. Afterwards,
 get SDK41 and copy it to a folder of your choice. Set the environment
 variable `SDK41` to point to this directory.
 
+If you also want to deploy the final ROM image to your
+[HP-41CL](http://www.systemyde.com/hp41/) calculator you have to set
+environment variable CLUPDATE to the pathname of the clupdate.jar tool
+and environment variable USBSERIAL to the device name of your USB serial
+connector (on my system the device name is `/dev/tty.usbserial-A1068IY7`).
+
 ## Project Organization
 The root of the project folder contains the build script `build.sh`.
 It's a simple bash script offering the following build targets:
 * _clean_: remove all build output files
 * _build_: build the MCODE project ROM image
 * _test_ (depends on build): run the HP-41 emulator for this project
+* _deploy_ (depends on build): deploy the ROM image to a HP-41CL calculator
 
 The MCODE source files as well as the linker file (.lnk) and the loader
 file (.lod) are located below the `src` subfolder. Please note that these
@@ -44,6 +51,24 @@ process and the standard ROM images from SDK41.
 * Run `./build.sh` to build the example ROM image.
 * run `./build.sh test` to build and run the example ROM image in the
   HP-41 emulator.
+
+### Deploy to HP-41CL Calculator
+The _deploy_ build target assumes that the clupdate tool is available
+on your computer and that your HP-41CL calculator is connected.
+In parallel to the build command you have to run a small program on your
+HP-41CL calculator to receive the ROM image. I use something like:
+```
+LBL 'RCVROM'
+UPLUG2L
+SERINI
+BAUD48
+"80D000-0FFF"
+YIMP
+"80D-RAM"
+PLUG2L
+END
+```
+Adjust it to your personal needs and preferences.
 
 ## Implementation Notes
 If you know bash a little bit, the build script should be mostly self-explanatory.
@@ -80,4 +105,4 @@ I guess you already know the following web sites:
   [The Museum of HP Calculators](http://hpmuseum.org/). There are many friendly
   HP calculator enthusiasts that are willing to share their knowledge and
   experience.
-
+* [Systemyde 41CL](http://www.systemyde.com/hp41/), the ultimate upgrade of your HP-41 calculator.
