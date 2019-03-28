@@ -76,7 +76,6 @@ createDosTestScript() {
     # DOS needs CR LF line terminators
     unix2dos -q $testScript
     echo "$testScript"
-    
 }
 
 # Build project, see build target 'build'
@@ -111,8 +110,8 @@ doDeploy() {
     local projectName="$1"
     doBuild "$projectName"
     echo "deploy $1"
-    echo "\033[0;31mStart the receive program on your HP-41CL now\033[0m"
-    sleep 5
+    echo "\033[0;31mGet ready to start receive program on your HP-41CL\033[0m"
+    sleep 2
     java -jar $CLUPDATE --upload build/${projectName}.rom $USBSERIAL 4800
     return 0
 }

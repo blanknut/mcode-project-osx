@@ -59,6 +59,7 @@ In parallel to the build command you have to run a small program on your
 HP-41CL calculator to receive the ROM image. I use something like:
 ```
 LBL 'RCVROM'
+TURBO50
 UPLUG2L
 SERINI
 BAUD48
@@ -96,7 +97,7 @@ Anyway, here are some details about it.
 * Function `lowerCaseFileNames()` converts the uppercase DOS file names to
   lower case. Again, a matter of personal taste (and perhaps of easier and
   faster file name completion).
-  
+
 ## References
 I guess you already know the following web sites:
 * [The HP-41 Archive](http://hp41.org/) web site contains _a lot_ of interesting
